@@ -62,9 +62,27 @@ struct Player playRoom(struct Player p, struct Room r, int day)
         printf("%d. %s\n", i + 1, r.options[i]);
     }
 
-    printf("Choose: ");
-    scanf("%d", &c);
+  while (1)
+{
+    printf("Choose (1-4): ");
 
+    if (scanf("%d", &c) != 1)
+    {
+        printf("Invalid input! Enter a number between 1 and 4.\n");
+
+        while (getchar() != '\n');
+        continue;
+    }
+
+    if (c >= 1 && c <= 4)
+    {
+        break;
+    }
+    else
+    {
+        printf("Wrong choice! Please select between 1 and 4.\n");
+    }
+}
     if (day == 1)
     {
         if (c == 1) { p.money += 15; p.food -= 10; p.life -= 5; }
@@ -85,10 +103,6 @@ struct Player playRoom(struct Player p, struct Room r, int day)
         else if (c == 2) { p.money += 15; p.life -= 5; }
         else if (c == 3) { p.money += 40; p.life -= 25; }
         else if (c == 4) { p.life += 10; p.food -= 5; }
-    }
-    else
-    {
-        printf("Wrong choice!\n");
     }
 
     randomEvent(&p, c + day);
